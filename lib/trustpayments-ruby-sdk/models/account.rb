@@ -26,6 +26,12 @@ module TrustPayments
     # This property is true when all accounts in the hierarchy are active or restricted active.
     attr_accessor :active_or_restricted_active
 
+    # The ID of the user who created this entity.
+    attr_accessor :created_by
+
+    # The date and time when this entity was created.
+    attr_accessor :created_on
+
     # The ID of a user that deleted this entity.
     attr_accessor :deleted_by
 
@@ -70,6 +76,8 @@ module TrustPayments
       {
         :'active' => :'active',
         :'active_or_restricted_active' => :'activeOrRestrictedActive',
+        :'created_by' => :'createdBy',
+        :'created_on' => :'createdOn',
         :'deleted_by' => :'deletedBy',
         :'deleted_on' => :'deletedOn',
         :'id' => :'id',
@@ -91,6 +99,8 @@ module TrustPayments
       {
         :'active' => :'BOOLEAN',
         :'active_or_restricted_active' => :'BOOLEAN',
+        :'created_by' => :'Integer',
+        :'created_on' => :'DateTime',
         :'deleted_by' => :'Integer',
         :'deleted_on' => :'DateTime',
         :'id' => :'Integer',
@@ -121,6 +131,14 @@ module TrustPayments
 
       if attributes.has_key?(:'activeOrRestrictedActive')
         self.active_or_restricted_active = attributes[:'activeOrRestrictedActive']
+      end
+
+      if attributes.has_key?(:'createdBy')
+        self.created_by = attributes[:'createdBy']
+      end
+
+      if attributes.has_key?(:'createdOn')
+        self.created_on = attributes[:'createdOn']
       end
 
       if attributes.has_key?(:'deletedBy')
@@ -220,6 +238,8 @@ module TrustPayments
       self.class == o.class &&
           active == o.active &&
           active_or_restricted_active == o.active_or_restricted_active &&
+          created_by == o.created_by &&
+          created_on == o.created_on &&
           deleted_by == o.deleted_by &&
           deleted_on == o.deleted_on &&
           id == o.id &&
@@ -244,7 +264,7 @@ module TrustPayments
     # Calculates hash code according to all attributes.
     # @return [Fixnum] Hash code
     def hash
-      [active, active_or_restricted_active, deleted_by, deleted_on, id, last_modified_date, name, parent_account, planned_purge_date, restricted_active, scope, state, subaccount_limit, type, version].hash
+      [active, active_or_restricted_active, created_by, created_on, deleted_by, deleted_on, id, last_modified_date, name, parent_account, planned_purge_date, restricted_active, scope, state, subaccount_limit, type, version].hash
     end
 
     # Builds the object from hash

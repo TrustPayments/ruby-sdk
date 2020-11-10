@@ -29,6 +29,12 @@ module TrustPayments
     # This property is true when all accounts in the hierarchy are active or restricted active.
     attr_accessor :active_or_restricted_active
 
+    # The ID of the user who created this entity.
+    attr_accessor :created_by
+
+    # The date and time when this entity was created.
+    attr_accessor :created_on
+
     # The database in which the space's data are stored in.
     attr_accessor :database
 
@@ -80,6 +86,8 @@ module TrustPayments
         :'account' => :'account',
         :'active' => :'active',
         :'active_or_restricted_active' => :'activeOrRestrictedActive',
+        :'created_by' => :'createdBy',
+        :'created_on' => :'createdOn',
         :'database' => :'database',
         :'deleted_by' => :'deletedBy',
         :'deleted_on' => :'deletedOn',
@@ -104,6 +112,8 @@ module TrustPayments
         :'account' => :'Account',
         :'active' => :'BOOLEAN',
         :'active_or_restricted_active' => :'BOOLEAN',
+        :'created_by' => :'Integer',
+        :'created_on' => :'DateTime',
         :'database' => :'TenantDatabase',
         :'deleted_by' => :'Integer',
         :'deleted_on' => :'DateTime',
@@ -140,6 +150,14 @@ module TrustPayments
 
       if attributes.has_key?(:'activeOrRestrictedActive')
         self.active_or_restricted_active = attributes[:'activeOrRestrictedActive']
+      end
+
+      if attributes.has_key?(:'createdBy')
+        self.created_by = attributes[:'createdBy']
+      end
+
+      if attributes.has_key?(:'createdOn')
+        self.created_on = attributes[:'createdOn']
       end
 
       if attributes.has_key?(:'database')
@@ -250,6 +268,8 @@ module TrustPayments
           account == o.account &&
           active == o.active &&
           active_or_restricted_active == o.active_or_restricted_active &&
+          created_by == o.created_by &&
+          created_on == o.created_on &&
           database == o.database &&
           deleted_by == o.deleted_by &&
           deleted_on == o.deleted_on &&
@@ -276,7 +296,7 @@ module TrustPayments
     # Calculates hash code according to all attributes.
     # @return [Fixnum] Hash code
     def hash
-      [account, active, active_or_restricted_active, database, deleted_by, deleted_on, id, last_modified_date, name, planned_purge_date, postal_address, primary_currency, request_limit, restricted_active, state, technical_contact_addresses, time_zone, version].hash
+      [account, active, active_or_restricted_active, created_by, created_on, database, deleted_by, deleted_on, id, last_modified_date, name, planned_purge_date, postal_address, primary_currency, request_limit, restricted_active, state, technical_contact_addresses, time_zone, version].hash
     end
 
     # Builds the object from hash

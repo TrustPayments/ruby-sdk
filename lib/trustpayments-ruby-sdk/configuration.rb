@@ -15,7 +15,7 @@ limitations under the License.
 
 =end
 
-require 'uri'
+require 'addressable/uri'
 
 module TrustPayments
   class Configuration
@@ -133,7 +133,7 @@ module TrustPayments
 
     def base_url
       url = "#{scheme}://#{[host, base_path].join('/').gsub(/\/+/, '/')}".sub(/\/+\z/, '')
-      URI.encode(url)
+   	  Addressable::URI.encode(url)
     end
 
   end
