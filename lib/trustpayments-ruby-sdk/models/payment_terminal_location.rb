@@ -26,9 +26,6 @@ module TrustPayments
     # 
     attr_accessor :default_configuration
 
-    # 
-    attr_accessor :delivery_address
-
     # The ID is the primary key of the entity. The ID identifies the entity uniquely.
     attr_accessor :id
 
@@ -52,7 +49,6 @@ module TrustPayments
       {
         :'contact_address' => :'contactAddress',
         :'default_configuration' => :'defaultConfiguration',
-        :'delivery_address' => :'deliveryAddress',
         :'id' => :'id',
         :'linked_space_id' => :'linkedSpaceId',
         :'name' => :'name',
@@ -65,9 +61,8 @@ module TrustPayments
     # Attribute type mapping.
     def self.swagger_types
       {
-        :'contact_address' => :'PaymentTerminalContactAddress',
+        :'contact_address' => :'PaymentTerminalAddress',
         :'default_configuration' => :'PaymentTerminalConfiguration',
-        :'delivery_address' => :'PaymentTerminalAddress',
         :'id' => :'Integer',
         :'linked_space_id' => :'Integer',
         :'name' => :'String',
@@ -91,10 +86,6 @@ module TrustPayments
 
       if attributes.has_key?(:'defaultConfiguration')
         self.default_configuration = attributes[:'defaultConfiguration']
-      end
-
-      if attributes.has_key?(:'deliveryAddress')
-        self.delivery_address = attributes[:'deliveryAddress']
       end
 
       if attributes.has_key?(:'id')
@@ -157,7 +148,6 @@ module TrustPayments
       self.class == o.class &&
           contact_address == o.contact_address &&
           default_configuration == o.default_configuration &&
-          delivery_address == o.delivery_address &&
           id == o.id &&
           linked_space_id == o.linked_space_id &&
           name == o.name &&
@@ -175,7 +165,7 @@ module TrustPayments
     # Calculates hash code according to all attributes.
     # @return [Fixnum] Hash code
     def hash
-      [contact_address, default_configuration, delivery_address, id, linked_space_id, name, planned_purge_date, state, version].hash
+      [contact_address, default_configuration, id, linked_space_id, name, planned_purge_date, state, version].hash
     end
 
     # Builds the object from hash
