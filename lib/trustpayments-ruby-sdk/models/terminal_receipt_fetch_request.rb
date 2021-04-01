@@ -18,37 +18,32 @@ limitations under the License.
 require 'date'
 
 module TrustPayments
-  # 
-  class RenderedTerminalReceipt
-    # The data property contains the binary data of the receipt document encoded as base 64 encoded string.
-    attr_accessor :data
+  # The receipt fetch request allows to retrieve the receipt documents for a terminal transaction.
+  class TerminalReceiptFetchRequest
+    # The format determines in what format the receipts will be returned in.
+    attr_accessor :format
 
-    # The mime type indicates the format of the receipt document. The mime type depends on the requested receipt format.
-    attr_accessor :mime_type
+    # Provide here the ID of the transaction for which the receipts should be fetched.
+    attr_accessor :transaction
 
-    # The terminal might or might not print the receipt. This property is set to true when the configuration of the terminal forces the printing and the device supports the receipt printing.
-    attr_accessor :printed
-
-    # Each receipt has a different usage. The receipt type indicates for what resp. for whom the document is for.
-    attr_accessor :receipt_type
+    # The width controls how width the document will be rendered. In case of the PDF format the width is in mm. In case of the text format the width is in the number of chars per line.
+    attr_accessor :width
 
     # Attribute mapping from ruby-style variable name to JSON key.
     def self.attribute_map
       {
-        :'data' => :'data',
-        :'mime_type' => :'mimeType',
-        :'printed' => :'printed',
-        :'receipt_type' => :'receiptType'
+        :'format' => :'format',
+        :'transaction' => :'transaction',
+        :'width' => :'width'
       }
     end
 
     # Attribute type mapping.
     def self.swagger_types
       {
-        :'data' => :'Array<String>',
-        :'mime_type' => :'String',
-        :'printed' => :'BOOLEAN',
-        :'receipt_type' => :'PaymentTerminalReceiptType'
+        :'format' => :'TerminalReceiptFormat',
+        :'transaction' => :'Integer',
+        :'width' => :'Integer'
       }
     end
 
@@ -60,22 +55,16 @@ module TrustPayments
       # convert string to symbol for hash key
       attributes = attributes.each_with_object({}) { |(k, v), h| h[k.to_sym] = v }
 
-      if attributes.has_key?(:'data')
-        if (value = attributes[:'data']).is_a?(Array)
-          self.data = value
-        end
+      if attributes.has_key?(:'format')
+        self.format = attributes[:'format']
       end
 
-      if attributes.has_key?(:'mimeType')
-        self.mime_type = attributes[:'mimeType']
+      if attributes.has_key?(:'transaction')
+        self.transaction = attributes[:'transaction']
       end
 
-      if attributes.has_key?(:'printed')
-        self.printed = attributes[:'printed']
-      end
-
-      if attributes.has_key?(:'receiptType')
-        self.receipt_type = attributes[:'receiptType']
+      if attributes.has_key?(:'width')
+        self.width = attributes[:'width']
       end
     end
 
@@ -83,12 +72,22 @@ module TrustPayments
     # @return Array for valid properties with the reasons
     def list_invalid_properties
       invalid_properties = Array.new
+      if @format.nil?
+        invalid_properties.push('invalid value for "format", format cannot be nil.')
+      end
+
+      if @transaction.nil?
+        invalid_properties.push('invalid value for "transaction", transaction cannot be nil.')
+      end
+
       invalid_properties
     end
 
     # Check to see if the all the properties in the model are valid
     # @return true if the model is valid
     def valid?
+      return false if @format.nil?
+      return false if @transaction.nil?
       true
     end
 
@@ -97,10 +96,9 @@ module TrustPayments
     def ==(o)
       return true if self.equal?(o)
       self.class == o.class &&
-          data == o.data &&
-          mime_type == o.mime_type &&
-          printed == o.printed &&
-          receipt_type == o.receipt_type
+          format == o.format &&
+          transaction == o.transaction &&
+          width == o.width
     end
 
     # @see the `==` method
@@ -112,7 +110,7 @@ module TrustPayments
     # Calculates hash code according to all attributes.
     # @return [Fixnum] Hash code
     def hash
-      [data, mime_type, printed, receipt_type].hash
+      [format, transaction, width].hash
     end
 
     # Builds the object from hash

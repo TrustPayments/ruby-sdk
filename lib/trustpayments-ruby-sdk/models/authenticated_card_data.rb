@@ -18,37 +18,37 @@ limitations under the License.
 require 'date'
 
 module TrustPayments
-  # 
-  class RenderedTerminalReceipt
-    # The data property contains the binary data of the receipt document encoded as base 64 encoded string.
-    attr_accessor :data
+  # This model holds the card data and optional cardholder authentication details.
+  class AuthenticatedCardData
+    # The additional authentication value used to secure the tokenized card transactions.
+    attr_accessor :cryptogram
 
-    # The mime type indicates the format of the receipt document. The mime type depends on the requested receipt format.
-    attr_accessor :mime_type
+    # 
+    attr_accessor :recurring_indicator
 
-    # The terminal might or might not print the receipt. This property is set to true when the configuration of the terminal forces the printing and the device supports the receipt printing.
-    attr_accessor :printed
+    # 
+    attr_accessor :token_requestor_id
 
-    # Each receipt has a different usage. The receipt type indicates for what resp. for whom the document is for.
-    attr_accessor :receipt_type
+    # The cardholder authentication information. The authentication is optional and can be provided if the cardholder has been already authenticated (e.g. in 3-D Secure system).
+    attr_accessor :cardholder_authentication
 
     # Attribute mapping from ruby-style variable name to JSON key.
     def self.attribute_map
       {
-        :'data' => :'data',
-        :'mime_type' => :'mimeType',
-        :'printed' => :'printed',
-        :'receipt_type' => :'receiptType'
+        :'cryptogram' => :'cryptogram',
+        :'recurring_indicator' => :'recurringIndicator',
+        :'token_requestor_id' => :'tokenRequestorId',
+        :'cardholder_authentication' => :'cardholderAuthentication'
       }
     end
 
     # Attribute type mapping.
     def self.swagger_types
       {
-        :'data' => :'Array<String>',
-        :'mime_type' => :'String',
-        :'printed' => :'BOOLEAN',
-        :'receipt_type' => :'PaymentTerminalReceiptType'
+        :'cryptogram' => :'CardCryptogram',
+        :'recurring_indicator' => :'RecurringIndicator',
+        :'token_requestor_id' => :'String',
+        :'cardholder_authentication' => :'CardholderAuthentication'
       }
     end
 
@@ -60,22 +60,20 @@ module TrustPayments
       # convert string to symbol for hash key
       attributes = attributes.each_with_object({}) { |(k, v), h| h[k.to_sym] = v }
 
-      if attributes.has_key?(:'data')
-        if (value = attributes[:'data']).is_a?(Array)
-          self.data = value
-        end
+      if attributes.has_key?(:'cryptogram')
+        self.cryptogram = attributes[:'cryptogram']
       end
 
-      if attributes.has_key?(:'mimeType')
-        self.mime_type = attributes[:'mimeType']
+      if attributes.has_key?(:'recurringIndicator')
+        self.recurring_indicator = attributes[:'recurringIndicator']
       end
 
-      if attributes.has_key?(:'printed')
-        self.printed = attributes[:'printed']
+      if attributes.has_key?(:'tokenRequestorId')
+        self.token_requestor_id = attributes[:'tokenRequestorId']
       end
 
-      if attributes.has_key?(:'receiptType')
-        self.receipt_type = attributes[:'receiptType']
+      if attributes.has_key?(:'cardholderAuthentication')
+        self.cardholder_authentication = attributes[:'cardholderAuthentication']
       end
     end
 
@@ -97,10 +95,10 @@ module TrustPayments
     def ==(o)
       return true if self.equal?(o)
       self.class == o.class &&
-          data == o.data &&
-          mime_type == o.mime_type &&
-          printed == o.printed &&
-          receipt_type == o.receipt_type
+          cryptogram == o.cryptogram &&
+          recurring_indicator == o.recurring_indicator &&
+          token_requestor_id == o.token_requestor_id &&
+          cardholder_authentication == o.cardholder_authentication
     end
 
     # @see the `==` method
@@ -112,7 +110,7 @@ module TrustPayments
     # Calculates hash code according to all attributes.
     # @return [Fixnum] Hash code
     def hash
-      [data, mime_type, printed, receipt_type].hash
+      [cryptogram, recurring_indicator, token_requestor_id, cardholder_authentication].hash
     end
 
     # Builds the object from hash

@@ -18,37 +18,42 @@ limitations under the License.
 require 'date'
 
 module TrustPayments
-  # This model holds the card data in plain.
-  class UnencryptedCardData
-    # The card holder name is the name printed onto the card. It identifies the person who owns the card.
-    attr_accessor :card_holder_name
+  # This model holds the cardholder authentication data (e.g. 3-D Secure authentication).
+  class CardholderAuthenticationCreate
+    # The authentication identifier as assigned by authentication system (e.g. XID or DSTransactionID).
+    attr_accessor :authentication_identifier
 
-    # The card verification code (CVC) is a 3 to 4 digit code typically printed on the back of the card. It helps to ensure that the card holder is authorizing the transaction. For card not-present transactions this field is optional.
-    attr_accessor :card_verification_code
+    # 
+    attr_accessor :authentication_response
 
-    # The card expiry date indicates when the card expires. The format is the format yyyy-mm where yyyy is the year (e.g. 2019) and the mm is the month (e.g. 09).
-    attr_accessor :expiry_date
+    # The cardholder authentication value. Also known as Cardholder Authentication Verification Value (CAVV).
+    attr_accessor :authentication_value
 
-    # The primary account number (PAN) identifies the card. The number is numeric and typically printed on the front of the card.
-    attr_accessor :primary_account_number
+    # The Electronic Commerce Indicator (ECI) value. The ECI is returned by authentication system and indicates the outcome/status of authentication.
+    attr_accessor :electronic_commerce_indicator
+
+    # 
+    attr_accessor :version
 
     # Attribute mapping from ruby-style variable name to JSON key.
     def self.attribute_map
       {
-        :'card_holder_name' => :'cardHolderName',
-        :'card_verification_code' => :'cardVerificationCode',
-        :'expiry_date' => :'expiryDate',
-        :'primary_account_number' => :'primaryAccountNumber'
+        :'authentication_identifier' => :'authenticationIdentifier',
+        :'authentication_response' => :'authenticationResponse',
+        :'authentication_value' => :'authenticationValue',
+        :'electronic_commerce_indicator' => :'electronicCommerceIndicator',
+        :'version' => :'version'
       }
     end
 
     # Attribute type mapping.
     def self.swagger_types
       {
-        :'card_holder_name' => :'String',
-        :'card_verification_code' => :'String',
-        :'expiry_date' => :'String',
-        :'primary_account_number' => :'String'
+        :'authentication_identifier' => :'String',
+        :'authentication_response' => :'CardAuthenticationResponse',
+        :'authentication_value' => :'String',
+        :'electronic_commerce_indicator' => :'String',
+        :'version' => :'CardAuthenticationVersion'
       }
     end
 
@@ -60,20 +65,24 @@ module TrustPayments
       # convert string to symbol for hash key
       attributes = attributes.each_with_object({}) { |(k, v), h| h[k.to_sym] = v }
 
-      if attributes.has_key?(:'cardHolderName')
-        self.card_holder_name = attributes[:'cardHolderName']
+      if attributes.has_key?(:'authenticationIdentifier')
+        self.authentication_identifier = attributes[:'authenticationIdentifier']
       end
 
-      if attributes.has_key?(:'cardVerificationCode')
-        self.card_verification_code = attributes[:'cardVerificationCode']
+      if attributes.has_key?(:'authenticationResponse')
+        self.authentication_response = attributes[:'authenticationResponse']
       end
 
-      if attributes.has_key?(:'expiryDate')
-        self.expiry_date = attributes[:'expiryDate']
+      if attributes.has_key?(:'authenticationValue')
+        self.authentication_value = attributes[:'authenticationValue']
       end
 
-      if attributes.has_key?(:'primaryAccountNumber')
-        self.primary_account_number = attributes[:'primaryAccountNumber']
+      if attributes.has_key?(:'electronicCommerceIndicator')
+        self.electronic_commerce_indicator = attributes[:'electronicCommerceIndicator']
+      end
+
+      if attributes.has_key?(:'version')
+        self.version = attributes[:'version']
       end
     end
 
@@ -81,24 +90,12 @@ module TrustPayments
     # @return Array for valid properties with the reasons
     def list_invalid_properties
       invalid_properties = Array.new
-      if !@card_holder_name.nil? && @card_holder_name.to_s.length > 100
-        invalid_properties.push('invalid value for "card_holder_name", the character length must be smaller than or equal to 100.')
+      if @authentication_response.nil?
+        invalid_properties.push('invalid value for "authentication_response", authentication_response cannot be nil.')
       end
 
-      if !@card_verification_code.nil? && @card_verification_code.to_s.length > 4
-        invalid_properties.push('invalid value for "card_verification_code", the character length must be smaller than or equal to 4.')
-      end
-
-      if !@card_verification_code.nil? && @card_verification_code.to_s.length < 3
-        invalid_properties.push('invalid value for "card_verification_code", the character length must be great than or equal to 3.')
-      end
-
-      if !@primary_account_number.nil? && @primary_account_number.to_s.length > 30
-        invalid_properties.push('invalid value for "primary_account_number", the character length must be smaller than or equal to 30.')
-      end
-
-      if !@primary_account_number.nil? && @primary_account_number.to_s.length < 10
-        invalid_properties.push('invalid value for "primary_account_number", the character length must be great than or equal to 10.')
+      if @version.nil?
+        invalid_properties.push('invalid value for "version", version cannot be nil.')
       end
 
       invalid_properties
@@ -107,50 +104,9 @@ module TrustPayments
     # Check to see if the all the properties in the model are valid
     # @return true if the model is valid
     def valid?
-      return false if !@card_holder_name.nil? && @card_holder_name.to_s.length > 100
-      return false if !@card_verification_code.nil? && @card_verification_code.to_s.length > 4
-      return false if !@card_verification_code.nil? && @card_verification_code.to_s.length < 3
-      return false if !@primary_account_number.nil? && @primary_account_number.to_s.length > 30
-      return false if !@primary_account_number.nil? && @primary_account_number.to_s.length < 10
+      return false if @authentication_response.nil?
+      return false if @version.nil?
       true
-    end
-
-    # Custom attribute writer method with validation
-    # @param [Object] card_holder_name Value to be assigned
-    def card_holder_name=(card_holder_name)
-      if !card_holder_name.nil? && card_holder_name.to_s.length > 100
-        fail ArgumentError, 'invalid value for "card_holder_name", the character length must be smaller than or equal to 100.'
-      end
-
-      @card_holder_name = card_holder_name
-    end
-
-    # Custom attribute writer method with validation
-    # @param [Object] card_verification_code Value to be assigned
-    def card_verification_code=(card_verification_code)
-      if !card_verification_code.nil? && card_verification_code.to_s.length > 4
-        fail ArgumentError, 'invalid value for "card_verification_code", the character length must be smaller than or equal to 4.'
-      end
-
-      if !card_verification_code.nil? && card_verification_code.to_s.length < 3
-        fail ArgumentError, 'invalid value for "card_verification_code", the character length must be great than or equal to 3.'
-      end
-
-      @card_verification_code = card_verification_code
-    end
-
-    # Custom attribute writer method with validation
-    # @param [Object] primary_account_number Value to be assigned
-    def primary_account_number=(primary_account_number)
-      if !primary_account_number.nil? && primary_account_number.to_s.length > 30
-        fail ArgumentError, 'invalid value for "primary_account_number", the character length must be smaller than or equal to 30.'
-      end
-
-      if !primary_account_number.nil? && primary_account_number.to_s.length < 10
-        fail ArgumentError, 'invalid value for "primary_account_number", the character length must be great than or equal to 10.'
-      end
-
-      @primary_account_number = primary_account_number
     end
 
     # Checks equality by comparing each attribute.
@@ -158,10 +114,11 @@ module TrustPayments
     def ==(o)
       return true if self.equal?(o)
       self.class == o.class &&
-          card_holder_name == o.card_holder_name &&
-          card_verification_code == o.card_verification_code &&
-          expiry_date == o.expiry_date &&
-          primary_account_number == o.primary_account_number
+          authentication_identifier == o.authentication_identifier &&
+          authentication_response == o.authentication_response &&
+          authentication_value == o.authentication_value &&
+          electronic_commerce_indicator == o.electronic_commerce_indicator &&
+          version == o.version
     end
 
     # @see the `==` method
@@ -173,7 +130,7 @@ module TrustPayments
     # Calculates hash code according to all attributes.
     # @return [Fixnum] Hash code
     def hash
-      [card_holder_name, card_verification_code, expiry_date, primary_account_number].hash
+      [authentication_identifier, authentication_response, authentication_value, electronic_commerce_indicator, version].hash
     end
 
     # Builds the object from hash

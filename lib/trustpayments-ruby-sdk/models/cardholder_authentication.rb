@@ -18,37 +18,42 @@ limitations under the License.
 require 'date'
 
 module TrustPayments
-  # 
-  class RenderedTerminalReceipt
-    # The data property contains the binary data of the receipt document encoded as base 64 encoded string.
-    attr_accessor :data
+  # This model holds the cardholder authentication data (e.g. 3-D Secure authentication).
+  class CardholderAuthentication
+    # The authentication identifier as assigned by authentication system (e.g. XID or DSTransactionID).
+    attr_accessor :authentication_identifier
 
-    # The mime type indicates the format of the receipt document. The mime type depends on the requested receipt format.
-    attr_accessor :mime_type
+    # 
+    attr_accessor :authentication_response
 
-    # The terminal might or might not print the receipt. This property is set to true when the configuration of the terminal forces the printing and the device supports the receipt printing.
-    attr_accessor :printed
+    # The cardholder authentication value. Also known as Cardholder Authentication Verification Value (CAVV).
+    attr_accessor :authentication_value
 
-    # Each receipt has a different usage. The receipt type indicates for what resp. for whom the document is for.
-    attr_accessor :receipt_type
+    # The Electronic Commerce Indicator (ECI) value. The ECI is returned by authentication system and indicates the outcome/status of authentication.
+    attr_accessor :electronic_commerce_indicator
+
+    # 
+    attr_accessor :version
 
     # Attribute mapping from ruby-style variable name to JSON key.
     def self.attribute_map
       {
-        :'data' => :'data',
-        :'mime_type' => :'mimeType',
-        :'printed' => :'printed',
-        :'receipt_type' => :'receiptType'
+        :'authentication_identifier' => :'authenticationIdentifier',
+        :'authentication_response' => :'authenticationResponse',
+        :'authentication_value' => :'authenticationValue',
+        :'electronic_commerce_indicator' => :'electronicCommerceIndicator',
+        :'version' => :'version'
       }
     end
 
     # Attribute type mapping.
     def self.swagger_types
       {
-        :'data' => :'Array<String>',
-        :'mime_type' => :'String',
-        :'printed' => :'BOOLEAN',
-        :'receipt_type' => :'PaymentTerminalReceiptType'
+        :'authentication_identifier' => :'String',
+        :'authentication_response' => :'CardAuthenticationResponse',
+        :'authentication_value' => :'String',
+        :'electronic_commerce_indicator' => :'String',
+        :'version' => :'CardAuthenticationVersion'
       }
     end
 
@@ -60,22 +65,24 @@ module TrustPayments
       # convert string to symbol for hash key
       attributes = attributes.each_with_object({}) { |(k, v), h| h[k.to_sym] = v }
 
-      if attributes.has_key?(:'data')
-        if (value = attributes[:'data']).is_a?(Array)
-          self.data = value
-        end
+      if attributes.has_key?(:'authenticationIdentifier')
+        self.authentication_identifier = attributes[:'authenticationIdentifier']
       end
 
-      if attributes.has_key?(:'mimeType')
-        self.mime_type = attributes[:'mimeType']
+      if attributes.has_key?(:'authenticationResponse')
+        self.authentication_response = attributes[:'authenticationResponse']
       end
 
-      if attributes.has_key?(:'printed')
-        self.printed = attributes[:'printed']
+      if attributes.has_key?(:'authenticationValue')
+        self.authentication_value = attributes[:'authenticationValue']
       end
 
-      if attributes.has_key?(:'receiptType')
-        self.receipt_type = attributes[:'receiptType']
+      if attributes.has_key?(:'electronicCommerceIndicator')
+        self.electronic_commerce_indicator = attributes[:'electronicCommerceIndicator']
+      end
+
+      if attributes.has_key?(:'version')
+        self.version = attributes[:'version']
       end
     end
 
@@ -97,10 +104,11 @@ module TrustPayments
     def ==(o)
       return true if self.equal?(o)
       self.class == o.class &&
-          data == o.data &&
-          mime_type == o.mime_type &&
-          printed == o.printed &&
-          receipt_type == o.receipt_type
+          authentication_identifier == o.authentication_identifier &&
+          authentication_response == o.authentication_response &&
+          authentication_value == o.authentication_value &&
+          electronic_commerce_indicator == o.electronic_commerce_indicator &&
+          version == o.version
     end
 
     # @see the `==` method
@@ -112,7 +120,7 @@ module TrustPayments
     # Calculates hash code according to all attributes.
     # @return [Fixnum] Hash code
     def hash
-      [data, mime_type, printed, receipt_type].hash
+      [authentication_identifier, authentication_response, authentication_value, electronic_commerce_indicator, version].hash
     end
 
     # Builds the object from hash
