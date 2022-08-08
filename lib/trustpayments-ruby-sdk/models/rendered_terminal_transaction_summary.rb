@@ -19,31 +19,26 @@ require 'date'
 
 module TrustPayments
   # 
-  class SubscriptionProductVersionRetirementCreate
-    # 
-    attr_accessor :product_version
+  class RenderedTerminalTransactionSummary
+    # The data property contains the binary data of the receipt document encoded as base 64 encoded string.
+    attr_accessor :data
 
-    # 
-    attr_accessor :respect_terminiation_periods_enabled
-
-    # When a target product is not chosen, all customers with the retired product will be terminated.
-    attr_accessor :target_product
+    # The mime type indicates the format of the receipt document. The mime type depends on the requested receipt format.
+    attr_accessor :mime_type
 
     # Attribute mapping from ruby-style variable name to JSON key.
     def self.attribute_map
       {
-        :'product_version' => :'productVersion',
-        :'respect_terminiation_periods_enabled' => :'respectTerminiationPeriodsEnabled',
-        :'target_product' => :'targetProduct'
+        :'data' => :'data',
+        :'mime_type' => :'mimeType'
       }
     end
 
     # Attribute type mapping.
     def self.swagger_types
       {
-        :'product_version' => :'Integer',
-        :'respect_terminiation_periods_enabled' => :'BOOLEAN',
-        :'target_product' => :'Integer'
+        :'data' => :'Array<String>',
+        :'mime_type' => :'String'
       }
     end
 
@@ -55,16 +50,14 @@ module TrustPayments
       # convert string to symbol for hash key
       attributes = attributes.each_with_object({}) { |(k, v), h| h[k.to_sym] = v }
 
-      if attributes.has_key?(:'productVersion')
-        self.product_version = attributes[:'productVersion']
+      if attributes.has_key?(:'data')
+        if (value = attributes[:'data']).is_a?(Array)
+          self.data = value
+        end
       end
 
-      if attributes.has_key?(:'respectTerminiationPeriodsEnabled')
-        self.respect_terminiation_periods_enabled = attributes[:'respectTerminiationPeriodsEnabled']
-      end
-
-      if attributes.has_key?(:'targetProduct')
-        self.target_product = attributes[:'targetProduct']
+      if attributes.has_key?(:'mimeType')
+        self.mime_type = attributes[:'mimeType']
       end
     end
 
@@ -72,17 +65,12 @@ module TrustPayments
     # @return Array for valid properties with the reasons
     def list_invalid_properties
       invalid_properties = Array.new
-      if @product_version.nil?
-        invalid_properties.push('invalid value for "product_version", product_version cannot be nil.')
-      end
-
       invalid_properties
     end
 
     # Check to see if the all the properties in the model are valid
     # @return true if the model is valid
     def valid?
-      return false if @product_version.nil?
       true
     end
 
@@ -91,9 +79,8 @@ module TrustPayments
     def ==(o)
       return true if self.equal?(o)
       self.class == o.class &&
-          product_version == o.product_version &&
-          respect_terminiation_periods_enabled == o.respect_terminiation_periods_enabled &&
-          target_product == o.target_product
+          data == o.data &&
+          mime_type == o.mime_type
     end
 
     # @see the `==` method
@@ -105,7 +92,7 @@ module TrustPayments
     # Calculates hash code according to all attributes.
     # @return [Fixnum] Hash code
     def hash
-      [product_version, respect_terminiation_periods_enabled, target_product].hash
+      [data, mime_type].hash
     end
 
     # Builds the object from hash

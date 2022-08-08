@@ -19,31 +19,71 @@ require 'date'
 
 module TrustPayments
   # 
-  class SubscriptionProductVersionRetirementCreate
+  class PaymentTerminalTransactionSum
     # 
-    attr_accessor :product_version
+    attr_accessor :brand
 
     # 
-    attr_accessor :respect_terminiation_periods_enabled
+    attr_accessor :dcc_tip_amount
 
-    # When a target product is not chosen, all customers with the retired product will be terminated.
-    attr_accessor :target_product
+    # 
+    attr_accessor :dcc_transaction_amount
+
+    # 
+    attr_accessor :dcc_transaction_count
+
+    # The ID is the primary key of the entity. The ID identifies the entity uniquely.
+    attr_accessor :id
+
+    # 
+    attr_accessor :product
+
+    # 
+    attr_accessor :transaction_amount
+
+    # 
+    attr_accessor :transaction_count
+
+    # 
+    attr_accessor :transaction_currency
+
+    # 
+    attr_accessor :transaction_tip_amount
+
+    # The version number indicates the version of the entity. The version is incremented whenever the entity is changed.
+    attr_accessor :version
 
     # Attribute mapping from ruby-style variable name to JSON key.
     def self.attribute_map
       {
-        :'product_version' => :'productVersion',
-        :'respect_terminiation_periods_enabled' => :'respectTerminiationPeriodsEnabled',
-        :'target_product' => :'targetProduct'
+        :'brand' => :'brand',
+        :'dcc_tip_amount' => :'dccTipAmount',
+        :'dcc_transaction_amount' => :'dccTransactionAmount',
+        :'dcc_transaction_count' => :'dccTransactionCount',
+        :'id' => :'id',
+        :'product' => :'product',
+        :'transaction_amount' => :'transactionAmount',
+        :'transaction_count' => :'transactionCount',
+        :'transaction_currency' => :'transactionCurrency',
+        :'transaction_tip_amount' => :'transactionTipAmount',
+        :'version' => :'version'
       }
     end
 
     # Attribute type mapping.
     def self.swagger_types
       {
-        :'product_version' => :'Integer',
-        :'respect_terminiation_periods_enabled' => :'BOOLEAN',
-        :'target_product' => :'Integer'
+        :'brand' => :'String',
+        :'dcc_tip_amount' => :'Float',
+        :'dcc_transaction_amount' => :'Float',
+        :'dcc_transaction_count' => :'Integer',
+        :'id' => :'Integer',
+        :'product' => :'String',
+        :'transaction_amount' => :'Float',
+        :'transaction_count' => :'Integer',
+        :'transaction_currency' => :'String',
+        :'transaction_tip_amount' => :'Float',
+        :'version' => :'Integer'
       }
     end
 
@@ -55,16 +95,48 @@ module TrustPayments
       # convert string to symbol for hash key
       attributes = attributes.each_with_object({}) { |(k, v), h| h[k.to_sym] = v }
 
-      if attributes.has_key?(:'productVersion')
-        self.product_version = attributes[:'productVersion']
+      if attributes.has_key?(:'brand')
+        self.brand = attributes[:'brand']
       end
 
-      if attributes.has_key?(:'respectTerminiationPeriodsEnabled')
-        self.respect_terminiation_periods_enabled = attributes[:'respectTerminiationPeriodsEnabled']
+      if attributes.has_key?(:'dccTipAmount')
+        self.dcc_tip_amount = attributes[:'dccTipAmount']
       end
 
-      if attributes.has_key?(:'targetProduct')
-        self.target_product = attributes[:'targetProduct']
+      if attributes.has_key?(:'dccTransactionAmount')
+        self.dcc_transaction_amount = attributes[:'dccTransactionAmount']
+      end
+
+      if attributes.has_key?(:'dccTransactionCount')
+        self.dcc_transaction_count = attributes[:'dccTransactionCount']
+      end
+
+      if attributes.has_key?(:'id')
+        self.id = attributes[:'id']
+      end
+
+      if attributes.has_key?(:'product')
+        self.product = attributes[:'product']
+      end
+
+      if attributes.has_key?(:'transactionAmount')
+        self.transaction_amount = attributes[:'transactionAmount']
+      end
+
+      if attributes.has_key?(:'transactionCount')
+        self.transaction_count = attributes[:'transactionCount']
+      end
+
+      if attributes.has_key?(:'transactionCurrency')
+        self.transaction_currency = attributes[:'transactionCurrency']
+      end
+
+      if attributes.has_key?(:'transactionTipAmount')
+        self.transaction_tip_amount = attributes[:'transactionTipAmount']
+      end
+
+      if attributes.has_key?(:'version')
+        self.version = attributes[:'version']
       end
     end
 
@@ -72,17 +144,12 @@ module TrustPayments
     # @return Array for valid properties with the reasons
     def list_invalid_properties
       invalid_properties = Array.new
-      if @product_version.nil?
-        invalid_properties.push('invalid value for "product_version", product_version cannot be nil.')
-      end
-
       invalid_properties
     end
 
     # Check to see if the all the properties in the model are valid
     # @return true if the model is valid
     def valid?
-      return false if @product_version.nil?
       true
     end
 
@@ -91,9 +158,17 @@ module TrustPayments
     def ==(o)
       return true if self.equal?(o)
       self.class == o.class &&
-          product_version == o.product_version &&
-          respect_terminiation_periods_enabled == o.respect_terminiation_periods_enabled &&
-          target_product == o.target_product
+          brand == o.brand &&
+          dcc_tip_amount == o.dcc_tip_amount &&
+          dcc_transaction_amount == o.dcc_transaction_amount &&
+          dcc_transaction_count == o.dcc_transaction_count &&
+          id == o.id &&
+          product == o.product &&
+          transaction_amount == o.transaction_amount &&
+          transaction_count == o.transaction_count &&
+          transaction_currency == o.transaction_currency &&
+          transaction_tip_amount == o.transaction_tip_amount &&
+          version == o.version
     end
 
     # @see the `==` method
@@ -105,7 +180,7 @@ module TrustPayments
     # Calculates hash code according to all attributes.
     # @return [Fixnum] Hash code
     def hash
-      [product_version, respect_terminiation_periods_enabled, target_product].hash
+      [brand, dcc_tip_amount, dcc_transaction_amount, dcc_transaction_count, id, product, transaction_amount, transaction_count, transaction_currency, transaction_tip_amount, version].hash
     end
 
     # Builds the object from hash

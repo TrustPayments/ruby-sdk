@@ -19,31 +19,56 @@ require 'date'
 
 module TrustPayments
   # 
-  class SubscriptionProductVersionRetirementCreate
+  class PaymentTerminalDccTransactionSum
     # 
-    attr_accessor :product_version
+    attr_accessor :brand
 
     # 
-    attr_accessor :respect_terminiation_periods_enabled
+    attr_accessor :dcc_amount
 
-    # When a target product is not chosen, all customers with the retired product will be terminated.
-    attr_accessor :target_product
+    # 
+    attr_accessor :dcc_currency
+
+    # The ID is the primary key of the entity. The ID identifies the entity uniquely.
+    attr_accessor :id
+
+    # 
+    attr_accessor :transaction_amount
+
+    # 
+    attr_accessor :transaction_count
+
+    # 
+    attr_accessor :transaction_currency
+
+    # The version number indicates the version of the entity. The version is incremented whenever the entity is changed.
+    attr_accessor :version
 
     # Attribute mapping from ruby-style variable name to JSON key.
     def self.attribute_map
       {
-        :'product_version' => :'productVersion',
-        :'respect_terminiation_periods_enabled' => :'respectTerminiationPeriodsEnabled',
-        :'target_product' => :'targetProduct'
+        :'brand' => :'brand',
+        :'dcc_amount' => :'dccAmount',
+        :'dcc_currency' => :'dccCurrency',
+        :'id' => :'id',
+        :'transaction_amount' => :'transactionAmount',
+        :'transaction_count' => :'transactionCount',
+        :'transaction_currency' => :'transactionCurrency',
+        :'version' => :'version'
       }
     end
 
     # Attribute type mapping.
     def self.swagger_types
       {
-        :'product_version' => :'Integer',
-        :'respect_terminiation_periods_enabled' => :'BOOLEAN',
-        :'target_product' => :'Integer'
+        :'brand' => :'String',
+        :'dcc_amount' => :'Float',
+        :'dcc_currency' => :'String',
+        :'id' => :'Integer',
+        :'transaction_amount' => :'Float',
+        :'transaction_count' => :'Integer',
+        :'transaction_currency' => :'String',
+        :'version' => :'Integer'
       }
     end
 
@@ -55,16 +80,36 @@ module TrustPayments
       # convert string to symbol for hash key
       attributes = attributes.each_with_object({}) { |(k, v), h| h[k.to_sym] = v }
 
-      if attributes.has_key?(:'productVersion')
-        self.product_version = attributes[:'productVersion']
+      if attributes.has_key?(:'brand')
+        self.brand = attributes[:'brand']
       end
 
-      if attributes.has_key?(:'respectTerminiationPeriodsEnabled')
-        self.respect_terminiation_periods_enabled = attributes[:'respectTerminiationPeriodsEnabled']
+      if attributes.has_key?(:'dccAmount')
+        self.dcc_amount = attributes[:'dccAmount']
       end
 
-      if attributes.has_key?(:'targetProduct')
-        self.target_product = attributes[:'targetProduct']
+      if attributes.has_key?(:'dccCurrency')
+        self.dcc_currency = attributes[:'dccCurrency']
+      end
+
+      if attributes.has_key?(:'id')
+        self.id = attributes[:'id']
+      end
+
+      if attributes.has_key?(:'transactionAmount')
+        self.transaction_amount = attributes[:'transactionAmount']
+      end
+
+      if attributes.has_key?(:'transactionCount')
+        self.transaction_count = attributes[:'transactionCount']
+      end
+
+      if attributes.has_key?(:'transactionCurrency')
+        self.transaction_currency = attributes[:'transactionCurrency']
+      end
+
+      if attributes.has_key?(:'version')
+        self.version = attributes[:'version']
       end
     end
 
@@ -72,17 +117,12 @@ module TrustPayments
     # @return Array for valid properties with the reasons
     def list_invalid_properties
       invalid_properties = Array.new
-      if @product_version.nil?
-        invalid_properties.push('invalid value for "product_version", product_version cannot be nil.')
-      end
-
       invalid_properties
     end
 
     # Check to see if the all the properties in the model are valid
     # @return true if the model is valid
     def valid?
-      return false if @product_version.nil?
       true
     end
 
@@ -91,9 +131,14 @@ module TrustPayments
     def ==(o)
       return true if self.equal?(o)
       self.class == o.class &&
-          product_version == o.product_version &&
-          respect_terminiation_periods_enabled == o.respect_terminiation_periods_enabled &&
-          target_product == o.target_product
+          brand == o.brand &&
+          dcc_amount == o.dcc_amount &&
+          dcc_currency == o.dcc_currency &&
+          id == o.id &&
+          transaction_amount == o.transaction_amount &&
+          transaction_count == o.transaction_count &&
+          transaction_currency == o.transaction_currency &&
+          version == o.version
     end
 
     # @see the `==` method
@@ -105,7 +150,7 @@ module TrustPayments
     # Calculates hash code according to all attributes.
     # @return [Fixnum] Hash code
     def hash
-      [product_version, respect_terminiation_periods_enabled, target_product].hash
+      [brand, dcc_amount, dcc_currency, id, transaction_amount, transaction_count, transaction_currency, version].hash
     end
 
     # Builds the object from hash

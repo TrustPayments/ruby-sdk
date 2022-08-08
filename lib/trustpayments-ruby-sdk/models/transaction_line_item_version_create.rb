@@ -19,26 +19,31 @@ require 'date'
 
 module TrustPayments
   # 
-  class TransactionLineItemUpdateRequest
-    # 
-    attr_accessor :new_line_items
+  class TransactionLineItemVersionCreate
+    # A client generated nonce which identifies the entity to be created. Subsequent creation requests with the same external ID will not create new entities but return the initially created entity instead.
+    attr_accessor :external_id
 
     # 
-    attr_accessor :transaction_id
+    attr_accessor :line_items
+
+    # 
+    attr_accessor :transaction
 
     # Attribute mapping from ruby-style variable name to JSON key.
     def self.attribute_map
       {
-        :'new_line_items' => :'newLineItems',
-        :'transaction_id' => :'transactionId'
+        :'external_id' => :'externalId',
+        :'line_items' => :'lineItems',
+        :'transaction' => :'transaction'
       }
     end
 
     # Attribute type mapping.
     def self.swagger_types
       {
-        :'new_line_items' => :'Array<LineItemCreate>',
-        :'transaction_id' => :'Integer'
+        :'external_id' => :'String',
+        :'line_items' => :'Array<LineItemCreate>',
+        :'transaction' => :'Integer'
       }
     end
 
@@ -50,14 +55,18 @@ module TrustPayments
       # convert string to symbol for hash key
       attributes = attributes.each_with_object({}) { |(k, v), h| h[k.to_sym] = v }
 
-      if attributes.has_key?(:'newLineItems')
-        if (value = attributes[:'newLineItems']).is_a?(Array)
-          self.new_line_items = value
+      if attributes.has_key?(:'externalId')
+        self.external_id = attributes[:'externalId']
+      end
+
+      if attributes.has_key?(:'lineItems')
+        if (value = attributes[:'lineItems']).is_a?(Array)
+          self.line_items = value
         end
       end
 
-      if attributes.has_key?(:'transactionId')
-        self.transaction_id = attributes[:'transactionId']
+      if attributes.has_key?(:'transaction')
+        self.transaction = attributes[:'transaction']
       end
     end
 
@@ -65,8 +74,16 @@ module TrustPayments
     # @return Array for valid properties with the reasons
     def list_invalid_properties
       invalid_properties = Array.new
-      if @transaction_id.nil?
-        invalid_properties.push('invalid value for "transaction_id", transaction_id cannot be nil.')
+      if @external_id.nil?
+        invalid_properties.push('invalid value for "external_id", external_id cannot be nil.')
+      end
+
+      if @line_items.nil?
+        invalid_properties.push('invalid value for "line_items", line_items cannot be nil.')
+      end
+
+      if @transaction.nil?
+        invalid_properties.push('invalid value for "transaction", transaction cannot be nil.')
       end
 
       invalid_properties
@@ -75,7 +92,9 @@ module TrustPayments
     # Check to see if the all the properties in the model are valid
     # @return true if the model is valid
     def valid?
-      return false if @transaction_id.nil?
+      return false if @external_id.nil?
+      return false if @line_items.nil?
+      return false if @transaction.nil?
       true
     end
 
@@ -84,8 +103,9 @@ module TrustPayments
     def ==(o)
       return true if self.equal?(o)
       self.class == o.class &&
-          new_line_items == o.new_line_items &&
-          transaction_id == o.transaction_id
+          external_id == o.external_id &&
+          line_items == o.line_items &&
+          transaction == o.transaction
     end
 
     # @see the `==` method
@@ -97,7 +117,7 @@ module TrustPayments
     # Calculates hash code according to all attributes.
     # @return [Fixnum] Hash code
     def hash
-      [new_line_items, transaction_id].hash
+      [external_id, line_items, transaction].hash
     end
 
     # Builds the object from hash

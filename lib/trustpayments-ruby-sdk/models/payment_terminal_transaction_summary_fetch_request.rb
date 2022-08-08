@@ -18,32 +18,32 @@ limitations under the License.
 require 'date'
 
 module TrustPayments
-  # 
-  class SubscriptionProductVersionRetirementCreate
-    # 
-    attr_accessor :product_version
+  # The receipt fetch request allows to retrieve the receipt documents for a terminal transaction.
+  class PaymentTerminalTransactionSummaryFetchRequest
+    # The format determines in what format the receipt will be returned in.
+    attr_accessor :format
 
-    # 
-    attr_accessor :respect_terminiation_periods_enabled
+    # The id of the transaction summary receipt whose content should be returned.
+    attr_accessor :summary_id
 
-    # When a target product is not chosen, all customers with the retired product will be terminated.
-    attr_accessor :target_product
+    # The width controls how width the document will be rendered. In case of the PDF format the width is in mm. In case of the text format the width is in the number of chars per line.
+    attr_accessor :width
 
     # Attribute mapping from ruby-style variable name to JSON key.
     def self.attribute_map
       {
-        :'product_version' => :'productVersion',
-        :'respect_terminiation_periods_enabled' => :'respectTerminiationPeriodsEnabled',
-        :'target_product' => :'targetProduct'
+        :'format' => :'format',
+        :'summary_id' => :'summaryId',
+        :'width' => :'width'
       }
     end
 
     # Attribute type mapping.
     def self.swagger_types
       {
-        :'product_version' => :'Integer',
-        :'respect_terminiation_periods_enabled' => :'BOOLEAN',
-        :'target_product' => :'Integer'
+        :'format' => :'TerminalReceiptFormat',
+        :'summary_id' => :'Integer',
+        :'width' => :'Integer'
       }
     end
 
@@ -55,16 +55,16 @@ module TrustPayments
       # convert string to symbol for hash key
       attributes = attributes.each_with_object({}) { |(k, v), h| h[k.to_sym] = v }
 
-      if attributes.has_key?(:'productVersion')
-        self.product_version = attributes[:'productVersion']
+      if attributes.has_key?(:'format')
+        self.format = attributes[:'format']
       end
 
-      if attributes.has_key?(:'respectTerminiationPeriodsEnabled')
-        self.respect_terminiation_periods_enabled = attributes[:'respectTerminiationPeriodsEnabled']
+      if attributes.has_key?(:'summaryId')
+        self.summary_id = attributes[:'summaryId']
       end
 
-      if attributes.has_key?(:'targetProduct')
-        self.target_product = attributes[:'targetProduct']
+      if attributes.has_key?(:'width')
+        self.width = attributes[:'width']
       end
     end
 
@@ -72,8 +72,12 @@ module TrustPayments
     # @return Array for valid properties with the reasons
     def list_invalid_properties
       invalid_properties = Array.new
-      if @product_version.nil?
-        invalid_properties.push('invalid value for "product_version", product_version cannot be nil.')
+      if @format.nil?
+        invalid_properties.push('invalid value for "format", format cannot be nil.')
+      end
+
+      if @summary_id.nil?
+        invalid_properties.push('invalid value for "summary_id", summary_id cannot be nil.')
       end
 
       invalid_properties
@@ -82,7 +86,8 @@ module TrustPayments
     # Check to see if the all the properties in the model are valid
     # @return true if the model is valid
     def valid?
-      return false if @product_version.nil?
+      return false if @format.nil?
+      return false if @summary_id.nil?
       true
     end
 
@@ -91,9 +96,9 @@ module TrustPayments
     def ==(o)
       return true if self.equal?(o)
       self.class == o.class &&
-          product_version == o.product_version &&
-          respect_terminiation_periods_enabled == o.respect_terminiation_periods_enabled &&
-          target_product == o.target_product
+          format == o.format &&
+          summary_id == o.summary_id &&
+          width == o.width
     end
 
     # @see the `==` method
@@ -105,7 +110,7 @@ module TrustPayments
     # Calculates hash code according to all attributes.
     # @return [Fixnum] Hash code
     def hash
-      [product_version, respect_terminiation_periods_enabled, target_product].hash
+      [format, summary_id, width].hash
     end
 
     # Builds the object from hash

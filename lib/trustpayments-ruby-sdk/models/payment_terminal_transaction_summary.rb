@@ -19,31 +19,66 @@ require 'date'
 
 module TrustPayments
   # 
-  class SubscriptionProductVersionRetirementCreate
+  class PaymentTerminalTransactionSummary
     # 
-    attr_accessor :product_version
+    attr_accessor :dcc_transaction_sums
 
     # 
-    attr_accessor :respect_terminiation_periods_enabled
+    attr_accessor :ended_on
 
-    # When a target product is not chosen, all customers with the retired product will be terminated.
-    attr_accessor :target_product
+    # The ID is the primary key of the entity. The ID identifies the entity uniquely.
+    attr_accessor :id
+
+    # The linked space id holds the ID of the space to which the entity belongs to.
+    attr_accessor :linked_space_id
+
+    # 
+    attr_accessor :number_of_transactions
+
+    # 
+    attr_accessor :payment_terminal
+
+    # 
+    attr_accessor :receipt
+
+    # 
+    attr_accessor :started_on
+
+    # 
+    attr_accessor :transaction_sums
+
+    # The version number indicates the version of the entity. The version is incremented whenever the entity is changed.
+    attr_accessor :version
 
     # Attribute mapping from ruby-style variable name to JSON key.
     def self.attribute_map
       {
-        :'product_version' => :'productVersion',
-        :'respect_terminiation_periods_enabled' => :'respectTerminiationPeriodsEnabled',
-        :'target_product' => :'targetProduct'
+        :'dcc_transaction_sums' => :'dccTransactionSums',
+        :'ended_on' => :'endedOn',
+        :'id' => :'id',
+        :'linked_space_id' => :'linkedSpaceId',
+        :'number_of_transactions' => :'numberOfTransactions',
+        :'payment_terminal' => :'paymentTerminal',
+        :'receipt' => :'receipt',
+        :'started_on' => :'startedOn',
+        :'transaction_sums' => :'transactionSums',
+        :'version' => :'version'
       }
     end
 
     # Attribute type mapping.
     def self.swagger_types
       {
-        :'product_version' => :'Integer',
-        :'respect_terminiation_periods_enabled' => :'BOOLEAN',
-        :'target_product' => :'Integer'
+        :'dcc_transaction_sums' => :'Array<PaymentTerminalDccTransactionSum>',
+        :'ended_on' => :'DateTime',
+        :'id' => :'Integer',
+        :'linked_space_id' => :'Integer',
+        :'number_of_transactions' => :'Integer',
+        :'payment_terminal' => :'Integer',
+        :'receipt' => :'String',
+        :'started_on' => :'DateTime',
+        :'transaction_sums' => :'Array<PaymentTerminalTransactionSum>',
+        :'version' => :'Integer'
       }
     end
 
@@ -55,16 +90,48 @@ module TrustPayments
       # convert string to symbol for hash key
       attributes = attributes.each_with_object({}) { |(k, v), h| h[k.to_sym] = v }
 
-      if attributes.has_key?(:'productVersion')
-        self.product_version = attributes[:'productVersion']
+      if attributes.has_key?(:'dccTransactionSums')
+        if (value = attributes[:'dccTransactionSums']).is_a?(Array)
+          self.dcc_transaction_sums = value
+        end
       end
 
-      if attributes.has_key?(:'respectTerminiationPeriodsEnabled')
-        self.respect_terminiation_periods_enabled = attributes[:'respectTerminiationPeriodsEnabled']
+      if attributes.has_key?(:'endedOn')
+        self.ended_on = attributes[:'endedOn']
       end
 
-      if attributes.has_key?(:'targetProduct')
-        self.target_product = attributes[:'targetProduct']
+      if attributes.has_key?(:'id')
+        self.id = attributes[:'id']
+      end
+
+      if attributes.has_key?(:'linkedSpaceId')
+        self.linked_space_id = attributes[:'linkedSpaceId']
+      end
+
+      if attributes.has_key?(:'numberOfTransactions')
+        self.number_of_transactions = attributes[:'numberOfTransactions']
+      end
+
+      if attributes.has_key?(:'paymentTerminal')
+        self.payment_terminal = attributes[:'paymentTerminal']
+      end
+
+      if attributes.has_key?(:'receipt')
+        self.receipt = attributes[:'receipt']
+      end
+
+      if attributes.has_key?(:'startedOn')
+        self.started_on = attributes[:'startedOn']
+      end
+
+      if attributes.has_key?(:'transactionSums')
+        if (value = attributes[:'transactionSums']).is_a?(Array)
+          self.transaction_sums = value
+        end
+      end
+
+      if attributes.has_key?(:'version')
+        self.version = attributes[:'version']
       end
     end
 
@@ -72,17 +139,12 @@ module TrustPayments
     # @return Array for valid properties with the reasons
     def list_invalid_properties
       invalid_properties = Array.new
-      if @product_version.nil?
-        invalid_properties.push('invalid value for "product_version", product_version cannot be nil.')
-      end
-
       invalid_properties
     end
 
     # Check to see if the all the properties in the model are valid
     # @return true if the model is valid
     def valid?
-      return false if @product_version.nil?
       true
     end
 
@@ -91,9 +153,16 @@ module TrustPayments
     def ==(o)
       return true if self.equal?(o)
       self.class == o.class &&
-          product_version == o.product_version &&
-          respect_terminiation_periods_enabled == o.respect_terminiation_periods_enabled &&
-          target_product == o.target_product
+          dcc_transaction_sums == o.dcc_transaction_sums &&
+          ended_on == o.ended_on &&
+          id == o.id &&
+          linked_space_id == o.linked_space_id &&
+          number_of_transactions == o.number_of_transactions &&
+          payment_terminal == o.payment_terminal &&
+          receipt == o.receipt &&
+          started_on == o.started_on &&
+          transaction_sums == o.transaction_sums &&
+          version == o.version
     end
 
     # @see the `==` method
@@ -105,7 +174,7 @@ module TrustPayments
     # Calculates hash code according to all attributes.
     # @return [Fixnum] Hash code
     def hash
-      [product_version, respect_terminiation_periods_enabled, target_product].hash
+      [dcc_transaction_sums, ended_on, id, linked_space_id, number_of_transactions, payment_terminal, receipt, started_on, transaction_sums, version].hash
     end
 
     # Builds the object from hash

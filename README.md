@@ -1,5 +1,3 @@
-[![Build Status](https://travis-ci.org/TrustPayments/ruby-sdk.svg?branch=master)](https://travis-ci.org/TrustPayments/ruby-sdk)
-
 # Trust Payments Ruby Library
 
 The Trust Payments Ruby library wraps around the Trust Payments API. This library facilitates your interaction with various services such as transactions, accounts, and subscriptions.
