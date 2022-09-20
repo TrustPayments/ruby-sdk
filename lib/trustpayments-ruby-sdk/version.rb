@@ -16,5 +16,5 @@ limitations under the License.
 =end
 
 module TrustPayments
-  VERSION = '3.1.4'
+  VERSION = '3.1.5'
 end
